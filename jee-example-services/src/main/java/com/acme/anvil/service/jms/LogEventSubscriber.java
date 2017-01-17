@@ -25,6 +25,10 @@ import weblogic.ejbgen.MessageDriven;
 )
 public class LogEventSubscriber extends GenericMessageDrivenBean implements MessageDrivenBean, MessageListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3612957772868982715L;
 	private static final Logger LOG = Logger.getLogger(LogEventSubscriber.class);
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss z");
 	

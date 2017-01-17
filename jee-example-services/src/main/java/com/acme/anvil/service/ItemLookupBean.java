@@ -12,6 +12,7 @@ import com.acme.anvil.service.jms.LogEventPublisher;
 import com.acme.anvil.vo.Item;
 import com.acme.anvil.vo.LogEvent;
 
+@SuppressWarnings("serial")
 public class ItemLookupBean extends GenericSessionBean implements SessionBean {
 
 	private static final Logger LOG = Logger.getLogger(ItemLookup.class);
