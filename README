@@ -27,9 +27,3 @@ Technologies targeted:
 * weblogic.transaction.XAResource
 * weblogic.servlet.security.AuthFilter
 
-
-Install migration-support.jar
-
-```
-mvn install:install-file -Dfile=migration-support/migration-support-1.0.0.jar -DpomFile=migration-support/pom.xml
-```
