@@ -14,15 +14,7 @@ import org.apache.log4j.Logger;
 import com.acme.anvil.vo.LogEvent;
 
 import weblogic.ejb.GenericMessageDrivenBean;
-import weblogic.ejbgen.MessageDriven;
 
-@MessageDriven(
-   ejbName = "LogEventSubscriber",
-   destinationJndiName = "jms/LogEventQueue",
-   destinationType = "javax.jms.Topic",
-   runAsPrincipalName = "anvil_user",
-   runAs = "anvil_user"
-)
 public class LogEventSubscriber extends GenericMessageDrivenBean implements MessageDrivenBean, MessageListener {
 
 	/**

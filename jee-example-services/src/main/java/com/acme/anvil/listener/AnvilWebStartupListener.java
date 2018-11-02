@@ -9,11 +9,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import weblogic.common.T3ServicesDef;
-import weblogic.common.T3StartupDef;
 import weblogic.i18n.logging.NonCatalogLogger;
-import weblogic.jndi.Environment;
-
 import com.acme.anvil.management.AnvilInvokeBeanImpl;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletContextEvent;
 
 /***
  * Prior to Weblogic 7, the T3StartupDef was a way of implementing startup listeners.
@@ -22,7 +21,7 @@ import com.acme.anvil.management.AnvilInvokeBeanImpl;
  * @author bradsdavis
  *
  */
-public class AnvilWebStartupListener implements T3StartupDef {
+public class AnvilWebStartupListener implements ServletContextListener {
 
 	private static final String MBEAN_NAME = "com.acme:Name=anvil,Type=com.acme.anvil.management.AnvilInvokeBeanT3StartupDef"; 
 	private NonCatalogLogger log;
@@ -38,7 +37,7 @@ public class AnvilWebStartupListener implements T3StartupDef {
 		this.services = services;
 	}
 
-	public String startup(String name, Hashtable ht) {
+	public void contextInitialized(ServletContextEvent sce) {
 		log.info("Starting Server Startup Class: "+name+" with properties: ");
 		
 		for(Object key : ht.keySet()) {
@@ -50,11 +49,7 @@ public class AnvilWebStartupListener implements T3StartupDef {
 
 	
 	private MBeanServer getMBeanServer() throws NamingException {
-		//alternative way to create InitialContext reference.
-		Environment env = new Environment();
-		env.setProviderUrl("t3://weblogicServer:7001");
-		env.setSecurityPrincipal("fred");
-		env.setSecurityCredentials("seafood");
+		java.util.Hashtable<String, String> envHashtable = new java.util.Hashtable<String, String>();
 		Context context = env.getContext();
 		
 		//get reference to the MBean Server...
@@ -73,6 +68,9 @@ public class AnvilWebStartupListener implements T3StartupDef {
 		} catch (Exception e) {
 			log.error("Exception while registering MBean["+MBEAN_NAME+"]");
 		}
+	}
+
+	public void contextDestroyed(ServletContextEvent sce) {
 	}
 	
 	

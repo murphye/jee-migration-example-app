@@ -58,8 +58,8 @@ public class LogEventPublisher {
 	private static Context getContext() throws NamingException {
 		Properties environment = new Properties();
 		environment.put(Context.INITIAL_CONTEXT_FACTORY,
-				"weblogic.jndi.WLInitialContextFactory");
-		environment.put(Context.PROVIDER_URL, "t3://localhost:7001");
+				"com.ibm.websphere.naming.WsnInitialContextFactory");
+		environment.put(Context.PROVIDER_URL, "corbaloc:iiop:localhost:2809");
 		Context context = new InitialContext(environment);
 
 		return context;

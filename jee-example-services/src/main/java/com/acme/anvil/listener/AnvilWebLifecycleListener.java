@@ -57,8 +57,8 @@ public class AnvilWebLifecycleListener extends ApplicationLifecycleListener {
 	
 	private MBeanServer getMBeanServer() throws NamingException {
 		Properties environment = new Properties();
-		environment.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-		environment.put(Context.PROVIDER_URL, "t3://localhost:7001");
+		environment.put(Context.INITIAL_CONTEXT_FACTORY, "com.ibm.websphere.naming.WsnInitialContextFactory");
+		environment.put(Context.PROVIDER_URL, "corbaloc:iiop:localhost:2809");
 		Context context = new InitialContext(environment);
 		
 		//get reference to the MBean Server...

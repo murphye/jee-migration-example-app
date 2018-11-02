@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.acme.anvil.service.ItemLookupLocal;
 import com.acme.anvil.service.ItemLookupLocalHome;
+import com.ibm.icu.text.NumberFormat;
 
 public class AnvilWebServlet extends HttpServlet {
 
@@ -34,7 +35,7 @@ public class AnvilWebServlet extends HttpServlet {
 			
 			String itemId = req.getParameter("id");
 			if(StringUtils.isNotBlank(itemId)) {
-				Long id = Long.parseLong(itemId);
+				Long id = NumberFormat.getNumberInstance().parse( itemId ).longValue();
 				local.lookupItem(id);
 			}
 		} catch (EJBException e) {
