@@ -7,11 +7,11 @@ import javax.management.ObjectName;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 import org.apache.log4j.Logger;
-
-import weblogic.application.ApplicationLifecycleEvent;
-import weblogic.application.ApplicationLifecycleListener;
 
 import com.acme.anvil.management.AnvilInvokeBeanImpl;
 
@@ -24,42 +24,27 @@ import com.acme.anvil.management.AnvilInvokeBeanImpl;
  * @author bradsdavis
  *
  */
-public class AnvilWebLifecycleListener extends ApplicationLifecycleListener {
+@WebListener
+public class AnvilWebLifecycleListener implements ServletContextListener {
 
 	private static Logger LOG = Logger.getLogger(AnvilWebLifecycleListener.class);
 	private static final String MBEAN_NAME = "com.acme:Name=anvil,Type=com.acme.anvil.management.AnvilInvokeBeanApplicationLifecycleListener";
 	
-	@Override
-	public void preStart(ApplicationLifecycleEvent evt) {
-		String appName = evt.getApplicationContext().getApplicationName();
-		LOG.info("Before Start Application["+appName+"]");
-	}
 	
-	@Override
-	public void postStart(ApplicationLifecycleEvent evt) {
-		String appName = evt.getApplicationContext().getApplicationName();
-		LOG.info("After Start Application["+appName+"]");
+	public void contextInitialized(ServletContextEvent event) {
+		String appName = event.getServletContext().getContextPath();
+		LOG.info("Initialized Application["+appName+"]");
 		registerMBean();
 	}
 	
-	@Override
-	public void postStop(ApplicationLifecycleEvent evt) {
-		String appName = evt.getApplicationContext().getApplicationName();
-		LOG.info("Before Stop Application["+appName+"]");
+	public void contextDestroyed(ServletContextEvent event) {
+		String appName = event.getServletContext().getContextPath();
+		LOG.info("Post Stop Application["+appName+"]");
 		unregisterMBean();
 	}
 	
-	@Override
-	public void preStop(ApplicationLifecycleEvent evt) {
-		String appName = evt.getApplicationContext().getApplicationName();
-		LOG.info("After Stop Application["+appName+"]");
-	}
-	
 	private MBeanServer getMBeanServer() throws NamingException {
-		Properties environment = new Properties();
-		environment.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-		environment.put(Context.PROVIDER_URL, "t3://localhost:7001");
-		Context context = new InitialContext(environment);
+		Context context = new InitialContext();
 		
 		//get reference to the MBean Server...
 		MBeanServer server = (MBeanServer) context.lookup("java:comp/jmx/runtime");

@@ -15,7 +15,7 @@ public class ProductCatalogBean implements SessionBean {
 	private SessionContext sessionContext;
 	
 	public void setSessionContext(SessionContext ctx) throws EJBException, RemoteException {
-		this.sessionContext = sessionContext;
+		this.sessionContext = ctx;
 	}
 
 	public void ejbRemove() throws EJBException, RemoteException {

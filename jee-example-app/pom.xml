@@ -1,33 +1,37 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
-		<artifactId>jee-example</artifactId>
-		<groupId>org.windup.example</groupId>
-		<version>1.0.0</version>
-		<relativePath>..</relativePath>
+		<groupId>org.jboss.windup.test.apps.weblogic</groupId>
+		<artifactId>jee-example-weblogic-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>jee-example-app</artifactId>
-	<name>JEE Example App</name>
+
+	<artifactId>jee-example-weblogic-app</artifactId>
 	<packaging>ear</packaging>
+
+	<name>Simple Sample App</name>
+
 	<build>
+		<finalName>jee-example-app</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
-				<version>2.8</version>
+				<version>2.9</version>
 				<configuration>
 					<configuration>
-			          <packagingIncludes>**/migration-support-*.jar</packagingIncludes>
-			        </configuration>
+					</configuration>
 					<modules>
 						<webModule>
-							<groupId>org.windup.example</groupId>
-							<artifactId>jee-example-web</artifactId>
+							<groupId>org.jboss.windup.test.apps.weblogic</groupId>
+							<artifactId>jee-example-weblogic-web</artifactId>
 							<bundleFileName>jee-example-web.war</bundleFileName>
 							<contextRoot>/jee-example-web</contextRoot>
 						</webModule>
 						<ejbModule>
-							<groupId>org.windup.example</groupId>
-							<artifactId>jee-example-services</artifactId>
+							<groupId>org.jboss.windup.test.apps.weblogic</groupId>
+							<artifactId>jee-example-weblogic-services</artifactId>
 							<bundleFileName>jee-example-services.jar</bundleFileName>
 						</ejbModule>
 					</modules>
@@ -35,18 +39,23 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
+
+		<!-- Project deps -->
 		<dependency>
-			<groupId>org.windup.example</groupId>
-			<artifactId>jee-example-web</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.jboss.windup.test.apps.weblogic</groupId>
+			<artifactId>jee-example-weblogic-web</artifactId>
+			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>org.windup.example</groupId>
-			<artifactId>jee-example-services</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.jboss.windup.test.apps.weblogic</groupId>
+			<artifactId>jee-example-weblogic-services</artifactId>
+			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
+
 	</dependencies>
+
 </project>
